@@ -41,6 +41,7 @@ template.innerHTML = `
   </form>
   
   <div id="name-container"></div>
+  <div id="joke-container"></div>
 </div>
 `
 
@@ -80,9 +81,31 @@ customElements.define('my-app',
      *
      * @param {SubmitEvent} event - The dispatched event.
      */
-    #handleSubmit (event) {
+    async #handleSubmit (event) {
       const name = this.shadowRoot.querySelector('input[type="text"]').value
-      this.shadowRoot.querySelector('#name-container').innerText = `Welcome ${name}!`
+
+      /*
+      const resp = await fetch(`https://api.agify.io/?name=${name}&country_id=SE`)
+      const data = await resp.json()
+
+      const phrase = `Welcome ${data.name}! The average age of people with your name is ${data.age}.`
+      this.shadowRoot.querySelector('#name-container').innerText = phrase
+      */
+
+      this.shadowRoot.querySelector('#name-container').innerText = `Hi ${name}! 👋`
+
+      let joke
+
+      try {
+        const resp = await fetch(`https://api.humorapi.com/jokes/random?include-tags=nerdy&api-key=${process.env.API_KEY}`)
+        const data = await resp.json()
+        joke = data.joke
+      } catch (error) {
+        joke = 'There are only 10 kinds of people in this world: those who know binary and those who don\'t.'
+        console.error(error)
+      }
+
+      this.shadowRoot.querySelector('#joke-container').innerText = joke
     }
   }
 )
