@@ -1,0 +1,24 @@
+{
+  "name": "1dv610-l0",
+  "version": "1.0.0",
+  "description": "1DV610 - Laboration 0",
+  "type": "module",
+  "browser": "src/js/index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.lnu.se:eh224kr/1dv610-l0.git"
+  },
+  "author": "Ellinor Henriksson <eh224kr@student.lnu.se>",
+  "private": true,
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.6",
+    "vite": "^3.0.9"
+  }
+}
