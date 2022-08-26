@@ -5,6 +5,9 @@
  * @version 1.0.0
  */
 
+import '../my-form'
+import '../my-greeting'
+
 // Get URL to images.
 /*
 const URLS = []
@@ -22,26 +25,15 @@ template.innerHTML = `
     padding: 20px;
   }
 
-  label {
-    width: 1px;
-    height: 1px;
-    position: absolute;
-    top: -1000px;
-    left: -1000px;
+  .hidden {
+    display: none;
   }
 </style>
 
 <div id="my-app">
-  <h1>Laboration 0</h1>
-  <p>Submit your name and get a personal greeting!</p>
-  <form>
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" placeholder="Name" autofocus required />
-    <input type="submit" value="Submit" />
-  </form>
-  
-  <div id="name-container"></div>
-  <div id="joke-container"></div>
+  <h1>Name app</h1>
+  <my-form></my-form>
+  <my-greeting class="hidden"></my-greeting>
 </div>
 `
 
@@ -51,12 +43,6 @@ customElements.define('my-app',
    */
   class extends HTMLElement {
     /**
-     * The #my-app div element.
-     *
-     * @type {HTMLDivElement}
-     */
-    #myApp
-    /**
      * Creates an instance of the current type.
      */
     constructor () {
@@ -65,47 +51,63 @@ customElements.define('my-app',
       // Attach a shadow DOM tree to this element and append the template to the shadow root.
       this.attachShadow({ mode: 'open' }).appendChild(template.content.cloneNode(true))
 
-      // Create a reference to the #desktop div element.
-      this.#myApp = this.shadowRoot.querySelector('#my-app')
-
       // Add event listeners.
-      this.shadowRoot.querySelector('form').addEventListener('submit', event => {
-        event.preventDefault()
-        event.stopPropagation()
+      this.shadowRoot.querySelector('my-form').addEventListener('submit', event => {
         this.#handleSubmit(event)
+      })
+
+      this.shadowRoot.querySelector('my-greeting').addEventListener('return', event => {
+        this.#handleReturn(event)
       })
     }
 
     /**
-     * Handles submit events.
+     * Handles custom submit events from the my-form component.
      *
-     * @param {SubmitEvent} event - The dispatched event.
+     * @param {CustomEvent} event - The dispatched event.
      */
     async #handleSubmit (event) {
-      const name = this.shadowRoot.querySelector('input[type="text"]').value
+      event.stopPropagation()
 
-      /*
-      const resp = await fetch(`https://api.agify.io/?name=${name}&country_id=SE`)
-      const data = await resp.json()
-
-      const phrase = `Welcome ${data.name}! The average age of people with your name is ${data.age}.`
-      this.shadowRoot.querySelector('#name-container').innerText = phrase
-      */
-
-      this.shadowRoot.querySelector('#name-container').innerText = `Hi ${name}! 👋`
-
+      // Fetch joke from API.
       let joke
 
       try {
-        const resp = await fetch(`https://api.humorapi.com/jokes/random?include-tags=nerdy&api-key=${process.env.API_KEY}`)
-        const data = await resp.json()
-        joke = data.joke
+        const resp = await fetch(`https://api.humorapi.com/jokes/random?include-tags=nerdy&api-key=${import.meta.env.VITE_API_KEY}`)
+
+        if (resp.ok) {
+          const data = await resp.json()
+          joke = data.joke
+        } else {
+          throw new Error()
+        }
       } catch (error) {
         joke = 'There are only 10 kinds of people in this world: those who know binary and those who don\'t.'
-        console.error(error)
       }
 
-      this.shadowRoot.querySelector('#joke-container').innerText = joke
+      // Set attribute name and joke on my-greeting.
+      this.shadowRoot.querySelector('my-greeting').setAttribute('name', event.detail.name)
+      this.shadowRoot.querySelector('my-greeting').setAttribute('joke', joke)
+
+      // Change view.
+      this.#toggleHidden()
+    }
+
+    /**
+     * Handles custom return events from the my-greeting component.
+     *
+     * @param {CustomEvent} event - The dispatched event.
+     */
+    async #handleReturn (event) {
+      this.#toggleHidden()
+    }
+
+    /**
+     * Hides/shows the form and the greeting.
+     */
+    #toggleHidden () {
+      this.shadowRoot.querySelector('my-form').classList.toggle('hidden')
+      this.shadowRoot.querySelector('my-greeting').classList.toggle('hidden')
     }
   }
 )
