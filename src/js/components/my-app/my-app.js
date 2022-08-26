@@ -23,10 +23,15 @@ template.innerHTML = `
 <style>
   #my-app {
     padding: 20px;
+    text-align: center;
   }
 
   .hidden {
     display: none;
+  }
+
+  h1 {
+    color: #32a852;
   }
 </style>
 

@@ -16,6 +16,33 @@ template.innerHTML = `
     top: -1000px;
     left: -1000px;
   }
+
+  input[type="text"] {
+    max-width: 500px;
+    padding: 5px;
+    border: 1px solid grey;
+    border-radius: 3px;
+  }
+
+  input[type="text"]:focus {
+    outline: #32a852 solid 2px;
+  }
+
+  input[type="submit"] {
+    padding: 5px;
+    border: 2px solid #32a852;
+    border-radius: 10px;
+    color: #ffffff;
+    background-color: #32a852;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  input[type="submit"]:hover {
+    color: #32a852;
+    background-color: #ffffff;
+  }
 </style>
 
 <div id="my-form">

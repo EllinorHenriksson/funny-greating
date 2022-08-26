@@ -9,7 +9,34 @@
 const template = document.createElement('template')
 template.innerHTML = `
 <style>
+  #name-container {
+    margin: 10px auto;
+  }
 
+  #joke-container {
+    margin: 10px auto;
+    max-width: 500px;
+    min-width: 300px;
+    padding: 10px;
+    font-style: italic;
+    font-size: 1.2rem;
+  }
+
+  button {
+    padding: 5px;
+    border: 2px solid #32a852;
+    border-radius: 10px;
+    color: #ffffff;
+    background-color: #32a852;
+    font-weight: bold;
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+
+  button:hover {
+    color: #32a852;
+    background-color: #ffffff;
+  }
 </style>
 
 <div id="my-greeting" class="hidden">
@@ -61,7 +88,7 @@ customElements.define('my-greeting',
       }
 
       if (name === 'joke') {
-        this.shadowRoot.querySelector('#joke-container').innerText = newValue
+        this.shadowRoot.querySelector('#joke-container').innerText = `"${newValue}"`
       }
     }
 
