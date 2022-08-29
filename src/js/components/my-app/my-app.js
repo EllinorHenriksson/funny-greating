@@ -8,6 +8,8 @@
 import '../my-form'
 import '../my-greeting'
 
+// Test
+
 // Define template.
 const template = document.createElement('template')
 template.innerHTML = `
