@@ -8,15 +8,6 @@
 import '../my-form'
 import '../my-greeting'
 
-// Get URL to images.
-/*
-const URLS = []
-
-for (let i = 0; i <= 3; i++) {
-  URLS.push(new URL(`./images/${i}.png`, import.meta.url))
-}
-*/
-
 // Define template.
 const template = document.createElement('template')
 template.innerHTML = `
