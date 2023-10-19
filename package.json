@@ -19,7 +19,6 @@
   "private": true,
   "devDependencies": {
     "@lnu/eslint-config": "^1.1.6",
-    "vite": "^3.0.9",
-    "dotenv": "^16.0.1"
+    "vite": "^3.0.9"
   }
 }

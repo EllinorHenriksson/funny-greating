@@ -69,7 +69,7 @@ customElements.define('my-app',
       let joke
 
       try {
-        const resp = await fetch(`https://api.humorapi.com/jokes/random?include-tags=nerdy&api-key=${import.meta.env.VITE_API_KEY}`)
+        const resp = await fetch(`https://api.humorapi.com/jokes/random?include-tags=nerdy&api-key=${process.env.API_KEY}`)
 
         if (resp.ok) {
           const data = await resp.json()
